@@ -4,16 +4,22 @@ function GUnitTestSuite(_instance) constructor {
         call_if_defined(private.before_all);
         array_foreach(private.tests, execute_test);
         call_if_defined(private.after_all);
+        private.annihilate_instance();
     }
     
     execute_test = function (_test, _index) {
         call_if_defined(private.before_each);
         try {
-            _test();
-            show_debug_message("Passed test!");
-        } catch (_error) {
-            show_debug_message("Failed test: " + _error);
+            var _test_method = _test.get_test_method();
+            _test_method();
+            _test.pass();
         }
+        catch (_error) {
+            _test.fail_with_cause(_error);
+            var _collection = _test.is_assertion_failed() ? private.failed_tests : private.error_tests;
+            array_push(_collection, _test);
+        }
+        show_debug_message(_test.build_result_message());
         call_if_defined(private.after_each);
     }
     #endregion
@@ -23,7 +29,7 @@ function GUnitTestSuite(_instance) constructor {
         before_all: undefined,
         before_each: undefined,
         tests: [],
-        successful_tests: [],
+        passed_tests: [],
         failed_tests: [],
         error_tests: [],
         after_each: undefined,
@@ -43,7 +49,7 @@ function GUnitTestSuite(_instance) constructor {
             }
             
             if (string_starts_with(_name, "test_")) {
-                array_push(tests, _value);
+                array_push(tests, new GUnitTest(_name, _value));
                 return;
             }
             
@@ -61,7 +67,12 @@ function GUnitTestSuite(_instance) constructor {
                     after_all = _value;
                     break;
             }
-        }
+        },
+        
+        annihilate_instance: function() {
+            instance_destroy(instance);
+            instance = undefined;
+        },
     }
     #endregion
     

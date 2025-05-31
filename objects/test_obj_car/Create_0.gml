@@ -24,10 +24,10 @@ test_goes_vroom_vroom = function() {
     var _result = _testee.make_noise();
     
     // Assert
-    var _expected = "Vroom vroom";
+    var _expected = "Vroom vrooom";
     gunit().assert_equals(_result, _expected, "Did not make the correct noise 3:");
 }
 
 test_is_red = function() {
-    show_debug_message("Ran test 2!");
+    show_debug_message(blub);
 }

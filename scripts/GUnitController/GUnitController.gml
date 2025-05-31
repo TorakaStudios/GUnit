@@ -14,9 +14,15 @@ function GUnitController() constructor {
     }
     
     static assert_equals = function(_actual, _expected, _message = $"Actual {_actual} did not equal expected {_expected}") {
-        if (_actual != _expected) {
-            throw ($"AssertionError: {_message}");
-        }
+        private.assert(_actual == _expected, _message);
+    }
+    
+    static assert_true = function(_condition, _message = $"Expected {_condition} to be true") {
+        private.assert(_condition, _message);
+    }
+    
+    static assert_false = function(_condition, _message = $"Expected {_condition} to be false") {
+        assert_true(!_condition, _message);
     }
     #endregion
     
@@ -27,7 +33,22 @@ function GUnitController() constructor {
         
         perform_global_teardown: function() {
             random_set_seed(starting_random_seed);
-        }
+        },
+        
+        assert: function(_condition, _message) {
+            if (_condition) {
+                return;
+            }
+            
+            var _stacktrace = debug_get_callstack();
+            throw {
+                message: _message,
+                longMessage: $"AssertionError: {_message}",
+                script: array_first(_stacktrace),
+                stacktrace: _stacktrace,
+                is_assertion_error: true
+            }
+        },
     };
     #endregion
     

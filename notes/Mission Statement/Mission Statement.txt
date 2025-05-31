@@ -75,5 +75,3 @@ Testing
         assert_throws
             Assert given code piece throws an error and return the error
         was_called_with
-
-function calls during struct initialisation by assigning to dummy value?
