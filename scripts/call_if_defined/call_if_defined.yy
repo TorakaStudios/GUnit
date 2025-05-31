@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"call_if_defined",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"call_if_defined",
+  "parent":{
+    "name":"Utilities",
+    "path":"folders/GUnit/Utilities.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

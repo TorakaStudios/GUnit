@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit_assert_equals",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit_assert_equals",
+  "parent":{
+    "name":"Assertions",
+    "path":"folders/GUnit/Assertions.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

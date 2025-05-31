@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GUnitController",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GUnitController",
+  "parent":{
+    "name":"Constructors",
+    "path":"folders/GUnit/Constructors.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit_mock",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit_mock",
+  "parent":{
+    "name":"Mocking",
+    "path":"folders/GUnit/Mocking.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

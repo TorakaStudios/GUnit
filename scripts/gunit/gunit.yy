@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit",
+  "parent":{
+    "name":"GUnit",
+    "path":"folders/GUnit.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
