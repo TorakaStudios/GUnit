@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"call_if_defined",
+  "%Name":"gunit_run",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"call_if_defined",
+  "name":"gunit_run",
   "parent":{
-    "name":"Utilities",
-    "path":"folders/GUnit/Utilities.yy",
+    "name":"Setup",
+    "path":"folders/GUnit/Setup.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

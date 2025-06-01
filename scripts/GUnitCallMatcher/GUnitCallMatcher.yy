@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GUnitCallMatcher",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GUnitCallMatcher",
+  "parent":{
+    "name":"Constructors",
+    "path":"folders/GUnit/Mocking/Constructors.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

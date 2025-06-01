@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit_create_instance",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit_create_instance",
+  "parent":{
+    "name":"Setup",
+    "path":"folders/GUnit/Setup.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

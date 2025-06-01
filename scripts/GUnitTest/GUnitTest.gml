@@ -13,8 +13,7 @@ function GUnitTest(_name, _test_method) constructor {
     }
     
     static fail_with_cause = function(_cause) {
-        // Do some logic to determine assertion or error
-        if (struct_exists(_cause, "is_assertion_error")) {
+        if (struct_exists(_cause, "is_assertion_error") && _cause.is_assertion_error) {
             private.result = TestResult.ASSERTION_FAILED;
         }
         else {
@@ -61,21 +60,20 @@ function GUnitTest(_name, _test_method) constructor {
         },
         
         build_passed_message: function() {
-            return $"Passed {name}";
+            return $"{name}";
         },
         
         build_failure_message: function() {
-            var _result_string = is_assertion_failed() ? "Failed assertion" : "ERROR";
-            return $"{_result_string}\t{name}\t{failure_context.message}\t{string_join_ext("\n", clean_stacktrace(failure_context.stacktrace))}";
+            return $"{name}\t{failure_context.message}\t{string_join_ext("\n", clean_stacktrace(failure_context.stacktrace))}";
         },
         
         clean_stacktrace: function(_stacktrace) {
             var _result = [];
             var _start_index = 0;
-            while (string_contains("GUnitController", _stacktrace[_start_index])) {
+            while (string_pos("GUnit", _stacktrace[_start_index]) != 0) {
                 _start_index++;
             }
-            for (var i = _start_index; i < array_length(_stacktrace) && !string_contains("GUnitTestSuite", _stacktrace[i]); i++) {
+            for (var i = _start_index; i < array_length(_stacktrace) && string_pos("GUnit", _stacktrace[i]) == 0; i++) {
                 array_push(_result, _stacktrace[i]);
             }
             return _result;

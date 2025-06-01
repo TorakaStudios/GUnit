@@ -25,8 +25,8 @@ Testing
     
     Workflow
         When required data is in place:
-            gunit_register_test_suite(obj_test_idol);
-                Instantiates obj_test_idol at 0,0
+            gunit_register_test_suite(test_obj_car);
+                Instantiates test_obj_car at 0,0
                 Add to test suite collection
             gunit_run();
                 Introspect all registered test suites
@@ -43,8 +43,7 @@ Testing
                         Is test method
                 Run the stuff
                 Reset mocks
-                    Track whether a mock was defined in a given test method or outside of one
-                    If in test, reset after that test; Else reset after all of them.
+                    Always after all tests
 
     Unit test
         Use mocks for all instances other than testee
@@ -59,7 +58,7 @@ Testing
         Leave global function set alone - GameMaker works, it is not under test
         Require prefacing calls to global scripts with global.<FUNCTION_NAME>
         Code examples:
-            var _double_mock = gunit_mock(double);
+            var _double_mock = gunit_mock_global("double");
             gunit_when(_double_mock).is_called_with(5).then_return(10);
 
             var _idol_mock = gunit_mock();
@@ -75,3 +74,43 @@ Testing
         assert_throws
             Assert given code piece throws an error and return the error
         was_called_with
+            _mock.assert_that(_function_name).was_called_with(args...).never() / .once() / .times(_number_of_times_called)
+            _mock.assert_that(_function_name).was_never_called();
+            _mock.assert_that(_function_name).was_called_once_with_any_arguments();
+            _mock.assert_that(_function_name).was_called_with_any_arguments().times(_number_of_times_called);
+
+IF no errors during before_each
+    Suite test_obj_car: 4 Passed, 0 Failed, 1 Error
+    IF Failed > 0 || Error > 0
+        Passed:
+            goes_vroom_vroom
+            cant_drive_with_empty_tank
+            can_drive_with_fuel_in_tank
+            describe_self_says_car_go_car
+        Failed:
+        Error:
+            fails_gracefully_on_error	Variable <unknown_object>.non_existent_value(100154, -2147483648) not set before reading it.	gml_Script_anon@1454@gml_Object_test_obj_car_Create_0 (line 62)
+    ELSE nothing
+    IF error during after_each
+    However, the test suite throw an error during after_all: 
+        <MESSAGE> <CALL_STACK>
+        ...
+    ELSE nothing
+ELSE
+    Suite test_obj_car threw an error during before_all. No tests were run. Cause:
+        <MESSAGE> <CALL_STACK>
+        ...
+
+Suite test_obj_car: 4 Passed, 1 Failed, 1 Error
+Passed:
+    goes_vroom_vroom
+    cant_drive_with_empty_tank
+    can_drive_with_fuel_in_tank
+    describe_self_says_car_go_car
+Failed:
+    failed_assertion	Expected 0 to be true	gml_Script_anon@1525@gml_Object_test_obj_car_Create_0:65
+Error:
+    fails_gracefully_on_error	Variable <unknown_object>.non_existent_value(100166, -2147483648) not set before reading it.	gml_Script_anon@1437@gml_Object_test_obj_car_Create_0 (line 61)
+
+However, the test suite throw an error during after_all:Variable <unknown_object>.non_existent(100157, -2147483648) not set before reading it.	gml_Script_anon@187@gml_Object_test_obj_car_Create_0 (line 15)
+

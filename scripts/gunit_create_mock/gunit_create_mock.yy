@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"gunit_mock",
+  "%Name":"gunit_create_mock",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"gunit_mock",
+  "name":"gunit_create_mock",
   "parent":{
     "name":"Mocking",
     "path":"folders/GUnit/Mocking.yy",

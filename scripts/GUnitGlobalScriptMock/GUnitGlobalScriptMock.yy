@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GUnitGlobalScriptMock",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GUnitGlobalScriptMock",
+  "parent":{
+    "name":"Constructors",
+    "path":"folders/GUnit/Mocking/Constructors.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

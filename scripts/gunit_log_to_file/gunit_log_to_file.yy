@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit_log_to_file",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit_log_to_file",
+  "parent":{
+    "name":"Setup",
+    "path":"folders/GUnit/Setup.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
