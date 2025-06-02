@@ -1,6 +1,75 @@
-function GUnitTestSuite(_instance, _name = object_get_name(_instance.object_index)) constructor {
-    #region "Public" methods
-    run = function() {
+function GUnitTestSuite(_instance, _name = "") constructor {
+    if (_name == "" && struct_exists(_instance, "object_index")) {
+        _name = object_get_name(_instance.object_index);
+    }
+    
+    #region Public methods
+    /**
+     * @description Add a function to be executed during the test run. This function is usually called by the framework, but is provided
+     * in case you want to manually set up a test suite created with gunit().register_new_empty_test_suite(_name).
+     * Note: Test functions should function the same no matter what order they are executed, i.e. no outside variables should be relied upon.
+     * See the Test Setup section of the readme.
+     * @parameter   {String}            _name           The test's name in the log. May be any string, but it's usually best to use the method's name.
+     * @parameter   {Function}          _test_function  The test function to execute. Remember to provide the reference WITHOUT parentheses ()!
+     * @return      {Struct.GUnitTestSuite}             This instance for chaining.
+     * */
+    static add_test = function(_name, _test_function) {
+        private.add_test(_name, _test_function);
+        return self;
+    }
+    
+    /**
+     * @description Define the function to be executed ONCE before any tests in this suite are run. This function is usually called by the framework, but is provided
+     * in case you want to manually set up a test suite created with gunit().register_new_empty_test_suite(_name).
+     * @parameter   {Function}          _function       The function to execute. Will be called ONCE, before ANY tests or the before_each function.
+     * @return      {Struct.GUnitTestSuite}             This instance for chaining.
+     * */
+    static set_before_all = function(_function) {
+        private.set_before_all(_function);
+        return self;
+    }
+    
+    /**
+     * @description Define the function to be executed before each test in this suite. This function is usually called by the framework, but is provided
+     * in case you want to manually set up a test suite created with gunit().register_new_empty_test_suite(_name).
+     * @parameter   {Function}          _function       The function to execute. Will be called for each test, just before the test is run. 
+     * @return      {Struct.GUnitTestSuite}             This instance for chaining.
+     * */
+    static set_before_each = function(_function) {
+        private.set_before_each(_function);
+        return self;
+    }
+    
+    /**
+    * @description Define the function to be executed after each test in this suite. If the test fails or throws an error, after_each will still
+    * be executed. This function is usually called by the framework, but is provided in case you want to manually set up a test suite 
+    * created with gunit().register_new_empty_test_suite(_name).
+    * @parameter   {Function}          _function       The function to execute. Will be called for each test, just after the test is run.
+    * @return      {Struct.GUnitTestSuite}             This instance for chaining.
+    * */
+    static set_after_each = function(_function) {
+        private.set_after_each(_function);
+        return self;
+    }
+    
+    /**
+    * @description Define the function to be executed ONCE after all tests in this suite. This function is usually called by the framework, but is provided
+    * in case you want to manually set up a test suite created with gunit().register_new_empty_test_suite(_name).
+    * @parameter   {Function}          _function       The function to execute. Will be called ONCE, after all tests and the after_each function.
+    * @return      {Struct.GUnitTestSuite}             This instance for chaining.
+    * */
+    static set_after_all = function(_function) {
+        private.set_after_all(_function);
+        return self;
+    }
+    
+    /**
+     * @description NOTE: This method is not meant to be called by you. It is an internal method to start test execution for this suite.
+     * Instead call gunit().run() or gunit_run() to execute all test suites and properly display results.
+     *  My kingdom for access modifiers :<
+     * @return     {String}                            The formatted results log entry
+     * */
+    static run = function() {
         try {
             private.call_if_defined(private.before_all);
         }
@@ -8,7 +77,7 @@ function GUnitTestSuite(_instance, _name = object_get_name(_instance.object_inde
             private.error_during_before_all = _error;
             return;
         }
-        array_foreach(private.tests, execute_test);
+        array_foreach(private.tests, private.execute_test);
         try {
             private.call_if_defined(private.after_all);
         }
@@ -16,44 +85,7 @@ function GUnitTestSuite(_instance, _name = object_get_name(_instance.object_inde
             private.error_during_after_all = _error;
         }
         private.annihilate_instance();
-    }
-    
-    execute_test = function (_test, _index) {
-        try {
-            private.call_if_defined(private.before_each);
-            var _test_method = _test.get_test_method();
-            _test_method();
-            private.call_if_defined(private.after_each);
-            _test.pass();
-            array_push(private.passed_tests, _test);
-        }
-        catch (_error) {
-            _test.fail_with_cause(_error);
-            var _collection = _test.is_assertion_failed() ? private.failed_tests : private.error_tests;
-            array_push(_collection, _test);
-        }
-        gunit().clean_up_after_test();
-    }
-    
-    build_result_message = function() {
-        if (private.error_during_before_all != undefined) {
-            return private.build_error_during_before_all_message();
-        }
-        
-        var _number_of_passed = array_length(private.passed_tests);
-        var _number_of_failed = array_length(private.failed_tests);
-        var _number_of_errors = array_length(private.error_tests);
-        var _result = $"Suite test_obj_car: {_number_of_passed} Passed, {_number_of_failed} Failed, {_number_of_errors} Error\n";
-        
-        if (_number_of_failed > 0 || _number_of_errors > 0) {
-            _result += $"{private.build_results_list()}\n";
-        }
-        
-        if (private.error_during_after_all != undefined) {
-            _result += $"{private.build_error_during_after_all_message()}\n";
-        }
-        
-        return _result;
+        return private.build_result_message();
     }
     #endregion
     
@@ -85,24 +117,46 @@ function GUnitTestSuite(_instance, _name = object_get_name(_instance.object_inde
             }
             
             if (string_starts_with(_name, "test_")) {
-                array_push(tests, new GUnitTest(_name, _value));
+                add_test(_name, _value);
                 return;
             }
             
             switch (_name) {
                 case "before_all":
-                    before_all = _value;
+                    set_before_all(_value);
                     break;
                 case "before_each":
-                    before_each = _value;
+                    set_before_each(_value);
                     break;
                 case "after_each":
-                    after_each = _value;
+                    set_after_each(_value);
                     break;
                 case "after_all":
-                    after_all = _value;
+                    set_after_all(_value);
+                    break;
+                default:
                     break;
             }
+        },
+        
+        add_test: function(_name, _function) {
+            array_push(tests, new GUnitTest(_name, _function));
+        },
+                
+        set_before_all: function(_function) {
+            before_all = _function;
+        },
+        
+        set_before_each: function(_function) {
+            before_each = _function;
+        },
+        
+        set_after_each: function(_function) {
+            after_each = _function;
+        },
+        
+        set_after_all: function(_function) {
+            after_all = _function;
         },
         
         call_if_defined: function(_function) {
@@ -111,13 +165,54 @@ function GUnitTestSuite(_instance, _name = object_get_name(_instance.object_inde
             }
         },
         
+        execute_test: function (_test, _index) {
+            try {
+                random_set_seed(57685);
+                call_if_defined(before_each);
+                var _test_method = _test.get_test_method();
+                _test_method();
+                _test.pass();
+                array_push(passed_tests, _test);
+            }
+            catch (_error) {
+                _test.fail_with_cause(_error);
+                var _collection = _test.is_assertion_failed() ? failed_tests : error_tests;
+                array_push(_collection, _test);
+            }
+            call_if_defined(after_each);
+            gunit().clean_up_after_test();
+        },
+        
+        build_result_message: function() {
+            if (error_during_before_all != undefined) {
+                return build_error_during_before_all_message();
+            }
+            
+            var _number_of_passed = array_length(passed_tests);
+            var _number_of_failed = array_length(failed_tests);
+            var _number_of_errors = array_length(error_tests);
+            var _result = $"{name != "" ? $"Suite {name}: " : ""}{_number_of_passed} Passed, {_number_of_failed} Failed, {_number_of_errors} Error\n";
+            
+            if (_number_of_failed > 0 || _number_of_errors > 0) {
+                _result += $"{build_results_list()}\n";
+            }
+            
+            if (error_during_after_all != undefined) {
+                _result += $"{build_error_during_after_all_message()}\n";
+            }
+            
+            return _result;
+        },
+        
         annihilate_instance: function() {
-            instance_destroy(instance);
+            if (instance_exists(instance) && struct_exists(instance, "object_index")) {
+                instance_destroy(instance);
+            }
             instance = undefined;
         },
         
         build_error_during_before_all_message: function() {
-            return $"Suite {name} threw an error during before_all. No tests were run. Cause:\n"
+            return $"{name != "" ? $"Suite {name}" : "The suite"} threw an error during before_all. No tests were run. Cause:\n"
                 + format_error(error_during_before_all);
         },
         

@@ -19,5 +19,5 @@ can_drive = function() {
 }
 
 describe_self = function() {
-    return global.describe("car");
+    return global.gunit_example_describe("car");
 }

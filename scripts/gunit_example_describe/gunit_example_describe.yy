@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"describe",
+  "%Name":"gunit_example_describe",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"describe",
+  "name":"gunit_example_describe",
   "parent":{
     "name":"Main",
     "path":"folders/Experimenting/Main.yy",

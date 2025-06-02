@@ -28,7 +28,7 @@ function GUnitGlobalScriptMock() : GUnitMock() constructor {
     
     private.store_original_value = function(_function_name) {
         if (!variable_global_exists(_function_name)) {
-            throw new GUnitControllerException($"Tried to mock global function {_function_name} which does not exist!");
+            throw new GUnitException($"Tried to mock global function {_function_name} which does not exist!");
         }
         var _original_value = variable_global_get(_function_name);
         struct_set(private.original_values, _function_name, _original_value);

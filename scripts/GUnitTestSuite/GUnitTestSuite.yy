@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"GUnitTestSuite",
   "parent":{
-    "name":"Constructors",
-    "path":"folders/GUnit/Constructors.yy",
+    "name":"Internal",
+    "path":"folders/GUnit/Internal.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -19,7 +19,7 @@ function GUnitMockConfiguration() constructor {
     static find_return_value = function(_arguments) {
         var _matcher = private.find_matcher_for_arguments(_arguments);
         if (_matcher == noone) {
-            throw new GUnitControllerException($"The function was never mocked for arguments {_arguments}! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
+            throw new GUnitException($"The function was never mocked for arguments {_arguments}! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
                 + " to define what the mock should do. [No .is_called_with... function was used!]");
         }
         _matcher.record_call();
@@ -33,21 +33,21 @@ function GUnitMockConfiguration() constructor {
         }
         var _matcher = private.find_matcher_for_arguments(_sane_argument_array);
         if (_matcher == noone) {
-            throw new GUnitControllerException($"The function was never mocked for arguments {_sane_argument_array}! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
+            throw new GUnitException($"The function was never mocked for arguments {_sane_argument_array}! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
                 + " to define what the mock should do. If it shouldn't do anything, use .then_do_nothing() instead of .then_return().  [No .is_called_with... function was used!]");
         }
         return _matcher;
     }
         
     static was_never_called = function(_message = $"Expected no calls with any arguments but the function was called {private.determine_total_number_of_calls()} times!") {
-        times(0, _message);
+        was_called_times_with_any_arguments(0, _message);
     }
     
     static was_called_once_with_any_arguments = function(_message = $"Expected the function to be called once with any arguments but it was called {private.determine_total_number_of_calls()} times!") {
-        times(1, _message);
+        was_called_times_with_any_arguments(1, _message);
     }
     
-    static times = function(_number_of_total_times_called, _message = $"Expected {_number_of_total_times_called} calls with any arguments but the function was called {private.determine_total_number_of_calls()} times!") {
+    static was_called_times_with_any_arguments = function(_number_of_total_times_called, _message = $"Expected {_number_of_total_times_called} calls with any arguments but the function was called {private.determine_total_number_of_calls()} times!") {
         gunit().assert_equals(private.determine_total_number_of_calls(), _number_of_total_times_called, _message);
     }
     #endregion

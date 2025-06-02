@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"GUnitController",
+  "%Name":"GUnitException",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"GUnitController",
+  "name":"GUnitException",
   "parent":{
     "name":"Internal",
     "path":"folders/GUnit/Internal.yy",

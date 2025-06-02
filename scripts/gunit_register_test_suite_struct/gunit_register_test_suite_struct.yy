@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gunit_register_test_suite_struct",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gunit_register_test_suite_struct",
+  "parent":{
+    "name":"Setup",
+    "path":"folders/GUnit/Setup.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

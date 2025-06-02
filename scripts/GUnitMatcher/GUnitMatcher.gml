@@ -10,7 +10,7 @@ function GUnitMatcher() constructor {
     
     static get_return_value = function() {
         if (!struct_exists(private, "return_value")) {
-            throw new GUnitControllerException("Partial mocking detected! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
+            throw new GUnitException("Partial mocking detected! Use \"<MOCK>.when(<FUNCTION_NAME>).is_called_with(<ARGUMENTS_ARRAY>).then_return(<VALUE>);\""
                         + " to define what the mock should do. [No .then... function was used!]");
         }
         

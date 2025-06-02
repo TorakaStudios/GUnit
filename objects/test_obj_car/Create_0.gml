@@ -69,7 +69,7 @@ test_describe_self_says_car_go_car = function() {
     // Arrange
     var _expected = "Car go car";
     var _testee = gunit().create_instance(obj_car);
-    gunit().get_global_script_mock().when("describe").is_called_with("car").then_return(_expected);
+    gunit().get_global_script_mock().when("gunit_example_describe").is_called_with("car").then_return(_expected);
     
     // Act
     var _result = _testee.describe_self();

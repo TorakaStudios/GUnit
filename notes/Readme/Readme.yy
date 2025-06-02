@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"",
+  "%Name":"Readme",
+  "name":"Readme",
+  "parent":{
+    "name":"GUnit",
+    "path":"folders/GUnit.yy",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}

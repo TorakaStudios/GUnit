@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"GUnitMockConfiguration",
   "parent":{
-    "name":"Constructors",
-    "path":"folders/GUnit/Mocking/Constructors.yy",
+    "name":"Internal",
+    "path":"folders/GUnit/Internal.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
