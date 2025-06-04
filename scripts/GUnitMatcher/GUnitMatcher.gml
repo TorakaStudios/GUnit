@@ -1,3 +1,7 @@
+/**
+* @description This constructor is NOT intended to be called directly. It is created as part of setting up a mock, during is_called_with()
+* or is_called_with_any_arguments(). Serves as the parent constructor for GUnitCallMatcher and GUnitUniversalMatcher.
+* */
 function GUnitMatcher() constructor {
     #region Public methods
     static then_return = function(_return_value) {

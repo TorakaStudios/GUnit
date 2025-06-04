@@ -1,5 +1,12 @@
 function GUnitMock() constructor {
     #region Public methods
+    /**
+     * @description Part of the chain to assert the given function was called a certain number of times [with certain arguments]. Usage:
+     *              _mock.assert_that(_function_name).was_called_with("a_string", 5).once();
+     *              See the Mocking section of the readme for more information.
+     * 
+     * @parameter   {String}    _function_name      The function name to check, as was provided to when(_function_name).
+     * */
     static assert_that = function(_function_name) {
         return private.get_configuration(_function_name);
     }

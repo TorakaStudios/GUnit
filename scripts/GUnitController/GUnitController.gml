@@ -9,6 +9,7 @@ function GUnitController() constructor {
     *  These methods must be set during the object's Create event. The name of test methods must start with "test_". Setup methods must be named
     *  *exactly* "before_all", "before_each", "after_each", or "after_all". The object may have other methods which will be ignored, and it may
     *  omit one or more setup methods.
+    * 
     * @param    {Asset.GMObject}            _object_index   The asset index of the test suite object to instantiate (such as test_obj_car)
     * @param    {String}                    _name           What the new test suite should be named in the test log. If omitted, the test suite
      *  will be named the same as the object_index's name.
@@ -24,6 +25,7 @@ function GUnitController() constructor {
     *  The name of test methods must start with "test_". Setup methods must be named *exactly* "before_all", "before_each", "after_each", or "after_all".
     *  The struct may have other methods which will be ignored, and it may omit one or more setup methods.
     *  This function can be called using an object instance, but it is highly encouraged to call register_test_suite with its object index instead.
+    * 
     * @param    {Asset.GMObject}            _struct         The test suite struct to register
     * @param    {String}                    _name           What the new test suite should be named in the test log. If omitted, the test suite
     *  will be named the same as the object_index's name.
@@ -38,6 +40,7 @@ function GUnitController() constructor {
      * @description Note: It is *highly* recommended you call register_test_suite or register_test_suite_struct instead of this method!
      *  Create, register, and return a test suite you will manually populate by calling its add_test, set_before_all, set_before_each,
      *  set_after_each, and set_after_all methods.
+     * 
      * @param   {String}                    _name           What the new test suite should be named in the test log.
      * @return  {Struct.GUnitTestSuite}                     The created test suite constructor instance.
      * */
@@ -49,6 +52,7 @@ function GUnitController() constructor {
     
     /**
     * @description Configure GUnit to output test results to a file as well as the debug console. The file will be deleted and recreated on each run.
+    * 
     * @param    {String}                    _file_name      The file name to output to. Includes file ending.
     *  It is recommended to end with ".txt", ".log", or a similar text-based ending to be nice to your operating system.
     * @return   {Struct.GUnitController}                    This controller instance for chaining
@@ -83,6 +87,7 @@ function GUnitController() constructor {
     /**
     * @description Instantiate the given object as by instance_create_depth and return it. The instance will be destroyed for you after the test completes.
     *  If you need an instance to exist for each test in a suite, consider calling this function in before_each or instantiating (and destroying) it manually.
+    * 
     * @param    {Asset.GMObject}            _object_index  The asset index to instantiate as per the fourth argument to instance_create_depth
     * @param    {Struct}                    _data          A struct containing any additional variables for the instance as per the fifth argument to instance_create_depth
     * @param    {Real}                      _x             The instance's x coordinate as per the first argument to instance_create_depth. Default 0
@@ -130,6 +135,7 @@ function GUnitController() constructor {
     
     /**
     * @description Assert that _actual == _expected. If it is not, the test will fail with the given _message.
+    * 
     * @param    {Any}                       _actual        The actual value produced by your code
     * @param    {Any}                       _expected      The expected value to compare against
     * @param    {String}                    _message       The message to log if this assertion fails. Default $"Actual {_actual} did not equal expected {_expected}"
@@ -140,6 +146,7 @@ function GUnitController() constructor {
     
     /**
     * @description Assert that _condition is true or some truthy value (a number above 0, a non-empty string, or a defined reference). If it is not, the test will fail with the given _message.
+    *
     * @param    {Any}                       _condition     The value that should be truthy
     * @param    {String}                    _message       The message to log if this assertion fails. Default $"Expected {_condition} to be true"
     * */
@@ -150,6 +157,7 @@ function GUnitController() constructor {
     /**
     * @description Assert that _condition is false or some falsy value (0 or a negative number, an empty string, or an undefined reference). If it is truthy, the test will fail with the given _message.
     *  This function is equivalent to calling assert_true(!_condition, _message). It is simply a convenience to make reading tests easier.
+    * 
     * @param    {Any}                       _condition     The value that should be falsy
     * @param    {String}                    _message       The message to log if this assertion fails. Default $"Expected {_condition} to be false"
     * */
