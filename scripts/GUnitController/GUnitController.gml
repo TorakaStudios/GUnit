@@ -63,9 +63,9 @@ function GUnitController() constructor {
     }
     
     /**
-    * @description Create and return a mock struct. The mock can be used in place of "real" instances and structs, returning fixed values when its methods are called.
+    * @description Create and return a mock struct. The mock can be used in place of real instances and structs, returning fixed values when its methods are called.
     *  Use the mock's when method to configure methods with return values.
-    *  See the "Mocking" section of the readme as well as GUnitInstanceMock and GUnitMockConfiguration for more information.
+    *  See the Mocking section of the readme as well as GUnitInstanceMock and GUnitMockConfiguration for more information.
     * @return   {Struct.GUnitInstanceMock}                  The created mock
     * */
     static create_mock = function() {
@@ -85,7 +85,8 @@ function GUnitController() constructor {
     }
     
     /**
-    * @description Instantiate the given object as by instance_create_depth and return it. The instance will be destroyed for you after the test completes.
+    * @description Instantiate the given object as by instance_create_depth and return it. All instances created during a test (whether or not this method was
+     * used to create them!) will be destroyed at the end of that test.
     *  If you need an instance to exist for each test in a suite, consider calling this function in before_each or instantiating (and destroying) it manually.
     * 
     * @param    {Asset.GMObject}            _object_index  The asset index to instantiate as per the fourth argument to instance_create_depth
@@ -103,7 +104,6 @@ function GUnitController() constructor {
             _object_index,
             _data
         );
-        private.add_created_instance(_instance);
         return _instance;
     }
     
@@ -121,6 +121,8 @@ function GUnitController() constructor {
     *  Any setup methods that aren't defined in a test suite will be skipped.
     * */
     static run = function() {
+        private.existing_instances = private.gather_all_existing_instances();
+        
         var _result_messages = array_create(array_length(private.test_suites));
         for (var i = 0; i < array_length(private.test_suites); i++) {
             var _test_suite = private.test_suites[i];
@@ -164,7 +166,9 @@ function GUnitController() constructor {
     static assert_false = function(_condition, _message = $"Expected {_condition} to be false") {
         assert_true(!_condition, _message);
     }
-        
+    #endregion
+    
+    #region Internal methods
     /**
     * @description NOTE: This method is not meant to be called by you. It is an internal method to restore mocked global scripts and destroy any instances created during a test.
     *  My kingdom for access modifiers :<
@@ -180,23 +184,28 @@ function GUnitController() constructor {
         starting_random_seed: random_get_seed(),
         logging_filename: undefined,
         test_suites: [],
-        created_instances: [],
+        existing_instances: [],
+        
+        gather_all_existing_instances: function() {
+            var _existing_instances = array_create(instance_count);
+            for (var i = 0; i < instance_count; i++) {
+                _existing_instances[i] = instance_find(all, i);
+            }
+            return _existing_instances;
+        },
         
         perform_global_teardown: function() {
             random_set_seed(starting_random_seed);
         },
         
-        add_created_instance: function(_instance) {
-            array_push(created_instances, _instance);
-        },
-        
         annihilate_all_created_instances: function() {
-            array_foreach(created_instances, function(_element, _index) {
+            var _all_instances = gather_all_existing_instances();
+            array_foreach(_all_instances, function(_element, _index) {
+                if (array_contains(existing_instances, _element)) {
+                    return;
+                }
                 instance_destroy(_element);
             });
-            if (array_length(created_instances) != 0) {
-                created_instances = [];
-            }
         },
         
         log_to_file_if_appropriate: function(_output) {

@@ -17,8 +17,8 @@
   ],
   "name":"gunit_example_room",
   "parent":{
-    "name":"Experimenting",
-    "path":"folders/Experimenting.yy",
+    "name":"Example",
+    "path":"folders/Example.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Car",
-    "path":"folders/Experimenting/Test/Car.yy",
+    "path":"folders/Example/Test/Car.yy",
   },
   "parentObjectId":null,
   "persistent":false,

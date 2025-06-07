@@ -71,6 +71,8 @@ test_describe_self_says_car_go_car = function() {
     var _testee = gunit().create_instance(obj_car);
     gunit().get_global_script_mock().when("gunit_example_describe").is_called_with("car").then_return(_expected);
     
+    new GUnitMockConfiguration()
+    
     // Act
     var _result = _testee.describe_self();
     

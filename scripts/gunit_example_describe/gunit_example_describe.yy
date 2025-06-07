@@ -6,7 +6,7 @@
   "name":"gunit_example_describe",
   "parent":{
     "name":"Main",
-    "path":"folders/Experimenting/Main.yy",
+    "path":"folders/Example/Main.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

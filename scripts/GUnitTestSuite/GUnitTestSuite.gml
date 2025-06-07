@@ -1,3 +1,8 @@
+/**
+* @description  This constructor is NOT intended to be called directly. It is created as part of register_test_suite(), register_test_suite_struct(),
+*               or register_new_empty_test_suite(). The former two methods will also populate the test suite for you, based on what methods it finds
+*               in the given object or struct.
+* */
 function GUnitTestSuite(_instance, _name = "") constructor {
     if (_name == "" && struct_exists(_instance, "object_index")) {
         _name = object_get_name(_instance.object_index);
@@ -8,7 +13,7 @@ function GUnitTestSuite(_instance, _name = "") constructor {
      * @description Add a function to be executed during the test run. This function is usually called by the framework, but is provided
      * in case you want to manually set up a test suite created with gunit().register_new_empty_test_suite(_name).
      * Note: Test functions should function the same no matter what order they are executed, i.e. no outside variables should be relied upon.
-     * See the Test Setup section of the readme.
+     * See the Test Setup section of the readme for more information.
      * @parameter   {String}            _name           The test's name in the log. May be any string, but it's usually best to use the method's name.
      * @parameter   {Function}          _test_function  The test function to execute. Remember to provide the reference WITHOUT parentheses ()!
      * @return      {Struct.GUnitTestSuite}             This instance for chaining.
@@ -62,7 +67,9 @@ function GUnitTestSuite(_instance, _name = "") constructor {
         private.set_after_all(_function);
         return self;
     }
+    #endregion
     
+    #region Internal methods
     /**
      * @description NOTE: This method is not meant to be called by you. It is an internal method to start test execution for this suite.
      * Instead call gunit().run() or gunit_run() to execute all test suites and properly display results.

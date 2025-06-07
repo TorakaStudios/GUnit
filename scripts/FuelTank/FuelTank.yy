@@ -6,7 +6,7 @@
   "name":"FuelTank",
   "parent":{
     "name":"Car",
-    "path":"folders/Experimenting/Main/Car.yy",
+    "path":"folders/Example/Main/Car.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

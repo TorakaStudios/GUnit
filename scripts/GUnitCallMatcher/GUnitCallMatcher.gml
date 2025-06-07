@@ -7,7 +7,7 @@
  *                                                  be specified during mocking, using their default value or undefined as appropriate.
  * */
 function GUnitCallMatcher(_expected_arguments) : GUnitMatcher() constructor {
-    #region Public methods
+    #region Internal methods
     /**
     * @description NOTE: This method is not meant to be called by you. It is an internal method to check whether this matcher applies to a function call.
     *  My kingdom for access modifiers :<
