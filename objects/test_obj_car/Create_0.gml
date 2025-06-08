@@ -58,6 +58,7 @@ test_can_drive_with_fuel_in_tank = function() {
 }
 
 test_fails_gracefully_on_error = function() {
+    throw "a string";
     show_debug_message(non_existent_value);
 }
 

@@ -182,6 +182,9 @@ function GUnitTestSuite(_instance, _name = "") constructor {
                 array_push(passed_tests, _test);
             }
             catch (_error) {
+                if (is_string(_error)) {
+                    _error = new GUnitException(_error);
+                }
                 _test.fail_with_cause(_error);
                 var _collection = _test.is_assertion_failed() ? failed_tests : error_tests;
                 array_push(_collection, _test);
